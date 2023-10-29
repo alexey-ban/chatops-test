@@ -15,7 +15,7 @@ jobs:
             [
               {
                 "command": "rebase",
-                "permission": "none",
+                "permission": "write",
                 "issue_type": "pull-request",
                 "repository": "nepalevov/ai-dial-ci"
               },
