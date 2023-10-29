@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Slash Command Dispatch
+        id: scd
         uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.PAT }}
@@ -14,7 +15,7 @@ jobs:
             [
               {
                 "command": "rebase",
-                "permission": "admin",
+                "permission": "none",
                 "issue_type": "pull-request",
                 "repository": "nepalevov/ai-dial-ci"
               },
@@ -25,3 +26,10 @@ jobs:
                 "repository": "nepalevov/ai-dial-ci"
               }
             ]
+      - name: Edit comment with error message
+        if: steps.scd.outputs.error-message
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          body: |
+            > ${{ steps.scd.outputs.error-message }}
