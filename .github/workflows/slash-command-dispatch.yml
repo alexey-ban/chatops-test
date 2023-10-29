@@ -10,5 +10,18 @@ jobs:
         uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.PAT }}
-          commands: example
-          repository: nepalevov/ai-dial-ci
+          config: >
+            [
+              {
+                "command": "rebase",
+                "permission": "admin",
+                "issue_type": "pull-request",
+                "repository": "nepalevov/ai-dial-ci"
+              },
+              {
+                "command": "deploy-review",
+                "permission": "write",
+                "issue_type": "pull-request",
+                "repository": "nepalevov/ai-dial-ci"
+              }
+            ]
